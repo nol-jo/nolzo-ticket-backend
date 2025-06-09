@@ -1,7 +1,10 @@
 package com.noljo.nolzo.seat.entity;
 
 import com.noljo.nolzo.global.BaseEntity;
+import com.noljo.nolzo.ticket.entity.Ticket;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +32,7 @@ public class Seat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SeatStatus status;
 
-
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ticket_id")
+    private List<Ticket> tickets = new ArrayList<>();
 }
