@@ -1,6 +1,7 @@
 package com.noljo.nolzo.reservation.entity;
 
 import com.noljo.nolzo.global.BaseEntity;
+import com.noljo.nolzo.member.entity.Member;
 import com.noljo.nolzo.ticket.entity.Ticket;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -29,4 +30,8 @@ public class Reservation extends BaseEntity {
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ticket_id")
     private List<Ticket> tickets = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
