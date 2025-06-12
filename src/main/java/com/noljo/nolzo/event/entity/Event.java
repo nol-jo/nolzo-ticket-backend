@@ -1,6 +1,10 @@
 package com.noljo.nolzo.event.entity;
 
+import com.noljo.nolzo.payment.entity.Payment;
+import com.noljo.nolzo.seat.entity.Seat;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,4 +40,6 @@ public class Event {
 
     private int reviewCount;
 
+    @OneToMany(mappedBy = "event", cascade = CascadeType.PERSIST)
+    private List<Seat> seats = new ArrayList<>();
 }

@@ -27,8 +27,7 @@ public class Reservation extends BaseEntity {
 
     private Long reservationNumber;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "ticket_id")
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.PERSIST)
     private List<Ticket> tickets = new ArrayList<>();
 
     @ManyToOne

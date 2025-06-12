@@ -1,6 +1,8 @@
 package com.noljo.nolzo.seat.entity;
 
+import com.noljo.nolzo.event.entity.Event;
 import com.noljo.nolzo.global.BaseEntity;
+import com.noljo.nolzo.reservation.entity.Reservation;
 import com.noljo.nolzo.ticket.entity.Ticket;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -32,7 +34,10 @@ public class Seat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SeatStatus status;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "ticket_id")
+    @OneToMany(mappedBy = "seat", cascade = CascadeType.PERSIST)
     private List<Ticket> tickets = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 }

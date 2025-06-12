@@ -1,6 +1,8 @@
 package com.noljo.nolzo.payment.entity;
 
 import com.noljo.nolzo.global.BaseEntity;
+import com.noljo.nolzo.member.entity.Member;
+import com.noljo.nolzo.reservation.entity.Reservation;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,4 +22,12 @@ public class Payment extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 }

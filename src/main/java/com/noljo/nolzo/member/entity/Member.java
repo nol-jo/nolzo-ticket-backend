@@ -1,6 +1,7 @@
 package com.noljo.nolzo.member.entity;
 
 import com.noljo.nolzo.global.BaseEntity;
+import com.noljo.nolzo.payment.entity.Payment;
 import com.noljo.nolzo.reservation.entity.Reservation;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class Member extends BaseEntity {
 
     private LocalDate birth;
 
-    @OneToMany
-    @JoinColumn(name = "reservation_id")
-    List<Reservation> reservations = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Payment> payments = new ArrayList<>();
 }
