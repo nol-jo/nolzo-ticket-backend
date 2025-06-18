@@ -2,9 +2,11 @@ package com.noljo.nolzo.event.service;
 
 import com.noljo.nolzo.event.dto.EventRequest;
 import com.noljo.nolzo.event.dto.EventResponse;
+import com.noljo.nolzo.event.dto.EventUpdate;
 import com.noljo.nolzo.event.entity.Event;
 import com.noljo.nolzo.event.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,11 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
+    public EventResponse findById(Long id) {
+        Event event = getEvent(id);
+        return EventResponse.from(event);
+    }
+    @Transactional(readOnly = true)
     public List<EventResponse> findAll() {
         return eventRepository.findAll().stream()
                 .map(EventResponse::from)
@@ -29,26 +36,19 @@ public class EventService {
     }
 
     public EventResponse save(EventRequest dto) {
-        Event saved = eventRepository.save(dto.toEntity());
-        return EventResponse.from(saved);
+            Event saved = eventRepository.save(dto.toEntity());
+            return EventResponse.from(saved);
     }
 
-    @Transactional(readOnly = true)
-    public EventResponse findById(Long id) {
-        Event event = getEvent(id);
-        return EventResponse.from(event);
-    }
-    public EventResponse update(Long id, EventRequest dto) {
-        getEvent(id);
-        Event updated = dto.toEntity(id);
-        Event saved = eventRepository.save(updated);
-        return EventResponse.from(saved);
+    public EventResponse update(Long id, EventUpdate dto) {
+            Event original = getEvent(id);
+            original.updateFrom(dto);
+            return EventResponse.from(original);
     }
 
     public void delete(Long id) {
-        getEvent(id);
-
-        eventRepository.deleteById(id);
+            getEvent(id);
+            eventRepository.deleteById(id);
     }
 
 
