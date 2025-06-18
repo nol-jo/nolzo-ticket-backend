@@ -1,6 +1,5 @@
 package com.noljo.nolzo.event.entity;
 
-import com.noljo.nolzo.payment.entity.Payment;
 import com.noljo.nolzo.seat.entity.Seat;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 @Entity
@@ -28,12 +26,19 @@ public class Event {
 
     private String description;
 
+    private String posterImageUrl;
+
     private LocalDate startDate;
 
     private LocalDate endDate;
 
+    @Embedded
+    private ShowSchedule schedule;
+
     @Enumerated(EnumType.STRING)
     private EventCategory eventCategory;
+
+    private int runtime;
 
     private int ageLimit;
 
@@ -45,15 +50,18 @@ public class Event {
     private List<Seat> seats = new ArrayList<>();
 
     @Builder
-    public Event(Long id, String title, String venue, String description, LocalDate startDate, LocalDate endDate,
-                 EventCategory eventCategory, int ageLimit, int rating, int reviewCount) {
+    public Event(Long id, String title, String venue, String description, String posterImageUrl, LocalDate startDate, LocalDate endDate, ShowSchedule schedule,
+                 EventCategory eventCategory, int runtime, int ageLimit, int rating, int reviewCount) {
         this.id = id;
         this.title = title;
         this.venue = venue;
         this.description = description;
+        this.posterImageUrl = posterImageUrl;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.schedule = schedule;
         this.eventCategory = eventCategory;
+        this.runtime = runtime;
         this.ageLimit = ageLimit;
         this.rating = rating;
         this.reviewCount = reviewCount;
