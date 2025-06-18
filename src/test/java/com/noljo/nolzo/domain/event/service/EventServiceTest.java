@@ -2,6 +2,7 @@ package com.noljo.nolzo.domain.event.service;
 
 import com.noljo.nolzo.event.dto.EventRequest;
 import com.noljo.nolzo.event.dto.EventResponse;
+import com.noljo.nolzo.event.dto.EventUpdate;
 import com.noljo.nolzo.event.service.EventService;
 import com.noljo.nolzo.support.annotation.ServiceTest;
 import com.noljo.nolzo.support.fixture.EventFixture;
@@ -55,13 +56,13 @@ class EventServiceTest {
     @Test
     void 이벤트를_갱신할_수_있다(){
         EventRequest dtoCats = EventFixture.캣츠dto();
-        EventRequest dtoHam = EventFixture.햄릿dto();
+        EventUpdate dtoCats2 = EventFixture.캣츠2dto();
         EventResponse response = eventService.save(dtoCats);
         Long id = response.getId();
 
-        EventResponse updatedResponse = eventService.update(id,dtoHam);
+        EventResponse updatedResponse = eventService.update(id,dtoCats2);
 
         Assertions.assertThat(id).isEqualTo(updatedResponse.getId());
-        Assertions.assertThat("Hamlet").isEqualTo(updatedResponse.getTitle());
+        Assertions.assertThat("Cats2").isEqualTo(updatedResponse.getTitle());
     }
 }
