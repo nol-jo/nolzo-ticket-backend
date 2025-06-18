@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShowSchedule {
+public class Schedule {
 
     @Column
     private LocalDate showDate;
