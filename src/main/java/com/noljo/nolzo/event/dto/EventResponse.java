@@ -2,11 +2,10 @@ package com.noljo.nolzo.event.dto;
 
 import com.noljo.nolzo.event.entity.Event;
 import com.noljo.nolzo.event.entity.EventCategory;
-import com.noljo.nolzo.event.entity.ShowSchedule;
+import com.noljo.nolzo.event.entity.Schedule;
+import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -19,7 +18,7 @@ public class EventResponse {
     private String posterImageUrl;
     private LocalDate startDate;
     private LocalDate endDate;
-    private ShowSchedule schedule;
+    private Schedule schedule;
     private EventCategory eventCategory;
     private int runtime;
     private int ageLimit;

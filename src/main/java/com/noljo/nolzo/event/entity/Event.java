@@ -33,7 +33,7 @@ public class Event {
     private LocalDate endDate;
 
     @Embedded
-    private ShowSchedule schedule;
+    private Schedule schedule;
 
     @Enumerated(EnumType.STRING)
     private EventCategory eventCategory;
@@ -50,7 +50,7 @@ public class Event {
     private List<Seat> seats = new ArrayList<>();
 
     @Builder
-    public Event(Long id, String title, String venue, String description, String posterImageUrl, LocalDate startDate, LocalDate endDate, ShowSchedule schedule,
+    public Event(Long id, String title, String venue, String description, String posterImageUrl, LocalDate startDate, LocalDate endDate, Schedule schedule,
                  EventCategory eventCategory, int runtime, int ageLimit, int rating, int reviewCount) {
         this.id = id;
         this.title = title;

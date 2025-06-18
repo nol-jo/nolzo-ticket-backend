@@ -2,14 +2,12 @@ package com.noljo.nolzo.event.dto;
 
 import com.noljo.nolzo.event.entity.Event;
 import com.noljo.nolzo.event.entity.EventCategory;
-import com.noljo.nolzo.event.entity.ShowSchedule;
-import jakarta.persistence.Embedded;
+import com.noljo.nolzo.event.entity.Schedule;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -30,7 +28,7 @@ public class EventRequest {
     @NotNull(message = "종료일 지정 필수")
     private LocalDate endDate;
 
-    private ShowSchedule schedule;
+    private Schedule schedule;
 
     //콤보박스여도 notnull?
     @NotNull(message = "카테고리 지정 필수")

@@ -4,8 +4,7 @@ import com.noljo.nolzo.event.dto.EventRequest;
 import com.noljo.nolzo.event.entity.Event;
 import com.noljo.nolzo.event.entity.EventCategory;
 import java.time.LocalDate;
-
-import com.noljo.nolzo.event.entity.ShowSchedule;
+import com.noljo.nolzo.event.entity.Schedule;
 import lombok.Getter;
 
 @Getter
@@ -23,7 +22,7 @@ public enum EventFixture {
     private String posterImageUrl;
     private LocalDate startDate;
     private LocalDate endDate;
-    private ShowSchedule schedule;
+    private Schedule schedule;
     private EventCategory eventCategory;
     private int runtime;
     private int ageLimit;
@@ -32,7 +31,7 @@ public enum EventFixture {
 
 
     EventFixture(String title, String venue, String description, String posterImageUrl,
-                 LocalDate startDate, LocalDate endDate, ShowSchedule schedule,
+                 LocalDate startDate, LocalDate endDate, Schedule schedule,
                  EventCategory eventCategory, int runtime, int ageLimit, int rating, int reviewCount
     ) {
         this.title = title;
@@ -53,6 +52,7 @@ public enum EventFixture {
         return new Event(null, 캣츠.title, 캣츠.venue, 캣츠.description, 캣츠.posterImageUrl,
         캣츠.startDate, 캣츠.endDate, 캣츠.schedule, 캣츠.eventCategory, 캣츠.runtime, 캣츠.ageLimit, 캣츠.rating, 캣츠.reviewCount);
     }
+
     public static EventRequest 캣츠dto() {
     return EventRequest.builder()
             .title(캣츠.title)
@@ -66,8 +66,8 @@ public enum EventFixture {
             .runtime(캣츠.runtime)
             .ageLimit(캣츠.ageLimit)
             .build();
-
     }
+
     public static EventRequest 햄릿dto() {
         return EventRequest.builder()
                 .title(햄릿.title)
@@ -81,6 +81,5 @@ public enum EventFixture {
                 .runtime(햄릿.runtime)
                 .ageLimit(햄릿.ageLimit)
                 .build();
-
     }
 }
