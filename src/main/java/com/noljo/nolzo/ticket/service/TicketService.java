@@ -4,14 +4,18 @@ import com.noljo.nolzo.member.entity.Member;
 import com.noljo.nolzo.member.repository.MemberRepository;
 import com.noljo.nolzo.reservation.entity.Reservation;
 import com.noljo.nolzo.reservation.repository.ReservationRepository;
+import com.noljo.nolzo.seat.entity.Seat;
 import com.noljo.nolzo.ticket.dto.TicketResponse;
 import com.noljo.nolzo.ticket.entity.Ticket;
+import com.noljo.nolzo.ticket.entity.TicketStatus;
 import com.noljo.nolzo.ticket.repository.TicketRepository;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.webjars.NotFoundException;
 
 @Transactional
 @Service
@@ -20,6 +24,12 @@ public class TicketService {
     private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;
     private final TicketRepository ticketRepository;
+
+    public TicketResponse create(Reservation reservation, Seat seat) {
+        Ticket ticket = new Ticket(TicketStatus.NOT_USED, reservation, seat);
+        ticketRepository.save(ticket);
+        return TicketResponse.from(ticket);
+    }
 
     @Transactional(readOnly = true)
     public List<TicketResponse> findTickets(Long memberId) {
@@ -39,6 +49,10 @@ public class TicketService {
         return TicketResponse.from(ticket);
     }
 
+    public void updateTicketStatusUsed(LocalDate targetDate, LocalTime targetTime) {
+        ticketRepository.updateExpiredTickets(targetDate, targetTime);
+    }
+
     private List<Long> findReservationIdListByMemberId(Member member) {
         return reservationRepository.findByMemberId(member.getId())
                 .stream()
@@ -50,4 +64,5 @@ public class TicketService {
         return ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new IllegalArgumentException("Ticket Not Found"));
     }
+
 }
