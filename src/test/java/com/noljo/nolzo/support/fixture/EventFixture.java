@@ -26,12 +26,24 @@ public enum EventFixture {
     햄릿("Hamlet", "국립극장 해오름극장", "셰익스피어 4대 비극 중 하나인 '햄릿'의 현대적 재해석 공연입니다.",
             "https://example.com/hamlet.jpg", LocalDate.of(2025, 7, 1), LocalDate.of(2025, 7, 15),
             EventCategory.CONCERT, 150, 15, 4, 80
-
             , LocalDateTime.of(2024, 2, 25, 12, 0), LocalDateTime.of(2024, 2, 27, 12, 0)),
     햄릿일정("Hamlet", "국립극장 해오름극장", "셰익스피어 4대 비극 중 하나인 '햄릿'의 현대적 재해석 공연.",
             "https://example.com/hamlet.jpg", LocalDate.of(2025, 7, 1), LocalDate.of(2025, 7, 15),
             EventCategory.CONCERT, 150, 15, 4, 80
-            , LocalDateTime.of(2024, 2, 25, 12, 0), LocalDateTime.of(2024, 2, 27, 12, 0));
+            , LocalDateTime.of(2024, 2, 25, 12, 0), LocalDateTime.of(2024, 2, 27, 12, 0)),
+    셜록_블러디("셜록홈즈: 블러디 게임", "LG아트센터 서울",
+            "정체불명의 연쇄 살인 사건을 둘러싼 셜록의 추리와 심리전",
+            "http://image.url/sherlock-bloody.jpg", LocalDate.of(2025, 11, 5),
+            LocalDate.of(2025, 12, 20), EventCategory.MUSICAL, 155, 15, 0, 0,
+            LocalDateTime.of(2025, 10, 1, 12, 0), LocalDateTime.of(2025, 10, 30, 12, 0)),
+    셜록_앤더슨("셜록홈즈: 앤더슨가의 비밀", "광림아트센터 BBCH홀", "셜록 홈즈와 왓슨이 앤더슨 가문의 미스터리를 파헤치는 이야기",
+            "http://image.url/sherlock-anderson.jpg", LocalDate.of(2025, 10, 15),
+            LocalDate.of(2025, 12, 20), EventCategory.MUSICAL, 155, 15, 0, 0,
+            LocalDateTime.of(2025, 9, 1, 12, 0), LocalDateTime.of(2025, 9, 30, 12, 0)),
+    뮤지컬_레미제라블("뮤지컬 레미제라블", "LG아트센터", "프랑스 혁명을 배경으로 한 뮤지컬",
+            "http://image.url/les-mis.jpg", LocalDate.of(2025, 8, 1), LocalDate.of(2025, 8, 20),
+            EventCategory.MUSICAL, 180, 13, 0, 0, LocalDateTime.of(2025, 7, 1, 0, 0),
+            LocalDateTime.of(2025, 7, 31, 23, 59));
 
     private String title;
     private String venue;
@@ -84,6 +96,33 @@ public enum EventFixture {
                 햄릿.reservationStart, 햄릿.reservationEnd);
         return event;
     }
+
+    public static Event 셜록_블러디() {
+        return new Event(null, 셜록_블러디.title, 셜록_블러디.venue, 셜록_블러디.description,
+                셜록_블러디.posterImageUrl, 셜록_블러디.startDate, 셜록_블러디.endDate,
+                셜록_블러디.eventCategory, 셜록_블러디.runtime, 셜록_블러디.ageLimit,
+                셜록_블러디.rating, 셜록_블러디.reviewCount,
+                셜록_블러디.reservationStart, 셜록_블러디.reservationEnd);
+    }
+
+    public static Event 셜록_앤더슨() {
+        return new Event(null, 셜록_앤더슨.title, 셜록_앤더슨.venue, 셜록_앤더슨.description,
+                셜록_앤더슨.posterImageUrl, 셜록_앤더슨.startDate, 셜록_앤더슨.endDate,
+                셜록_앤더슨.eventCategory, 셜록_앤더슨.runtime, 셜록_앤더슨.ageLimit,
+                셜록_앤더슨.rating, 셜록_앤더슨.reviewCount,
+                셜록_앤더슨.reservationStart, 셜록_앤더슨.reservationEnd);
+    }
+
+    public static Event 뮤지컬_레미제라블() {
+        return new Event(null, 뮤지컬_레미제라블.title, 뮤지컬_레미제라블.venue, 뮤지컬_레미제라블.description,
+                뮤지컬_레미제라블.posterImageUrl, 뮤지컬_레미제라블.startDate, 뮤지컬_레미제라블.endDate,
+                뮤지컬_레미제라블.eventCategory, 뮤지컬_레미제라블.runtime, 뮤지컬_레미제라블.ageLimit,
+                뮤지컬_레미제라블.rating, 뮤지컬_레미제라블.reviewCount,
+                뮤지컬_레미제라블.reservationStart, 뮤지컬_레미제라블.reservationEnd);
+    }
+
+
+
 
     public static EventRequest 캣츠dto() {
         return EventRequest.builder()
@@ -168,4 +207,73 @@ public enum EventFixture {
                 .reservationEnd(햄릿일정.reservationEnd)
                 .build();
     }
+
+    public static EventRequest 셜록_블러디_dto() {
+        return EventRequest.builder()
+                .title(셜록_블러디.title)
+                .venue(셜록_블러디.venue)
+                .description(셜록_블러디.description)
+                .posterImageUrl(셜록_블러디.posterImageUrl)
+                .startDate(셜록_블러디.startDate)
+                .endDate(셜록_블러디.endDate)
+                .eventCategory(셜록_블러디.eventCategory)
+                .runtime(셜록_블러디.runtime)
+                .ageLimit(셜록_블러디.ageLimit)
+                .schedules(List.of(
+                        new ScheduleInfo(
+                                LocalDate.of(2024, 5, 10),
+                                LocalTime.of(19, 30)
+                        )
+                ))
+                .reservationStart(셜록_블러디.reservationStart)
+                .reservationEnd(셜록_블러디.reservationEnd)
+                .build();
+    }
+
+    public static EventRequest 셜록_앤더슨_dto() {
+        return EventRequest.builder()
+                .title(셜록_앤더슨.title)
+                .venue(셜록_앤더슨.venue)
+                .description(셜록_앤더슨.description)
+                .posterImageUrl(셜록_앤더슨.posterImageUrl)
+                .startDate(셜록_앤더슨.startDate)
+                .endDate(셜록_앤더슨.endDate)
+                .eventCategory(셜록_앤더슨.eventCategory)
+                .runtime(셜록_앤더슨.runtime)
+                .ageLimit(셜록_앤더슨.ageLimit)
+                .schedules(List.of(
+                        new ScheduleInfo(
+                                LocalDate.of(2024, 5, 10),
+                                LocalTime.of(19, 30)
+                        )
+                ))
+                .reservationStart(셜록_앤더슨.reservationStart)
+                .reservationEnd(셜록_앤더슨.reservationEnd)
+                .build();
+    }
+
+    public static EventRequest 뮤지컬_레미제라블_dto() {
+        return EventRequest.builder()
+                .title(뮤지컬_레미제라블.title)
+                .venue(뮤지컬_레미제라블.venue)
+                .description(뮤지컬_레미제라블.description)
+                .posterImageUrl(뮤지컬_레미제라블.posterImageUrl)
+                .startDate(뮤지컬_레미제라블.startDate)
+                .endDate(뮤지컬_레미제라블.endDate)
+                .eventCategory(뮤지컬_레미제라블.eventCategory)
+                .runtime(뮤지컬_레미제라블.runtime)
+                .ageLimit(뮤지컬_레미제라블.ageLimit)
+                .schedules(List.of(
+                        new ScheduleInfo(
+                                LocalDate.of(2024, 5, 10),
+                                LocalTime.of(19, 30)
+                        )
+                ))
+                .reservationStart(뮤지컬_레미제라블.reservationStart)
+                .reservationEnd(뮤지컬_레미제라블.reservationEnd)
+                .build();
+    }
+
+
+
 }
