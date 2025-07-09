@@ -14,6 +14,7 @@ import com.noljo.nolzo.support.fixture.FileFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.List;
@@ -46,7 +47,6 @@ class EventServiceTest {
 
     @Test
     void 개별_이벤트를_조회할_수_있다() {
-
         EventRequest dto = EventFixture.캣츠dto();
 
         EventResponse response = eventService.save(dto, image);
@@ -57,33 +57,8 @@ class EventServiceTest {
 
     @Test
     void 제목에_검색어가_포함된_이벤트만_조회된다() {
-        Event event1 = eventRepository.save(Event.builder()
-                .title("셜록홈즈: 블러디 게임")
-                .venue("LG아트센터 서울")
-                .description("정체불명의 연쇄 살인 사건을 둘러싼 셜록의 추리와 심리전")
-                .posterImageUrl("http://image.url/sherlock-bloody.jpg")
-                .startDate(LocalDate.of(2025, 11, 5))
-                .endDate(LocalDate.of(2025, 12, 20))
-                .eventCategory(EventCategory.MUSICAL)
-                .runtime(155)
-                .ageLimit(15)
-                .rating(0)
-                .reviewCount(0)
-                .build());
-
-        Event event2 = eventRepository.save(Event.builder()
-                .title("셜록홈즈: 앤더슨가의 비밀")
-                .venue("광림아트센터 BBCH홀")
-                .description("셜록 홈즈와 왓슨이 앤더슨 가문의 미스터리를 파헤치는 이야기")
-                .posterImageUrl("http://image.url/sherlock-anderson.jpg")
-                .startDate(LocalDate.of(2025, 10, 15))
-                .endDate(LocalDate.of(2025, 12, 20))
-                .eventCategory(EventCategory.MUSICAL)
-                .runtime(155)
-                .ageLimit(15)
-                .rating(0)
-                .reviewCount(0)
-                .build());
+        Event event1 = eventRepository.save(EventFixture.셜록_블러디());
+        Event event2 = eventRepository.save(EventFixture.셜록_앤더슨());
 
         List<EventResponse> result = eventService.searchEventList("셜록");
 
@@ -94,28 +69,23 @@ class EventServiceTest {
     }
 
     @Test
-    void 카테고리별_이벤트를_조회할_수_있다() {
-        EventRequest concertEvent = EventFixture.캣츠dto();
-        EventRequest hamletEvent = EventFixture.햄릿dto();
-        eventService.save(concertEvent, image);
-        eventService.save(hamletEvent, image);
+    void 카테고리별_페이징_처리_및_이벤트_조회_테스트() {
+        EventRequest dto1 = EventFixture.뮤지컬_레미제라블_dto();
+        EventResponse response1 = eventService.save(dto1, image);
 
-        List<EventResponse> concertEvents = eventService.findAllByCategory(EventCategory.CONCERT);
+        EventRequest dto2 = EventFixture.셜록_블러디_dto();
+        EventResponse response2 = eventService.save(dto2, image);
 
-        Assertions.assertThat(concertEvents).hasSize(2);
-        Assertions.assertThat(concertEvents)
-                .extracting("eventCategory")
-                .containsOnly(EventCategory.CONCERT);
-    }
+        EventRequest dto3 = EventFixture.셜록_앤더슨_dto();
+        EventResponse response3 = eventService.save(dto3, image);
 
-    @Test
-    void 존재하지_않는_카테고리의_이벤트_조회시_빈_리스트를_반환한다() {
-        EventRequest concertEvent = EventFixture.캣츠dto();
-        eventService.save(concertEvent, image);
+        Slice<EventResponse> result = eventService.findAllByCategory(EventCategory.MUSICAL, 0);
 
-        List<EventResponse> otherEvents = eventService.findAllByCategory(EventCategory.MUSICAL);
+        Assertions.assertThat(result.getContent())
+                .hasSize(3)
+                .allSatisfy(event -> Assertions.assertThat(event.getEventCategory()).isEqualTo(EventCategory.MUSICAL));
 
-        Assertions.assertThat(otherEvents).isEmpty();
+        Assertions.assertThat(result.hasNext()).isFalse();
     }
 
     @Test
