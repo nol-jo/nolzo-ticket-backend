@@ -44,8 +44,7 @@ public class EventService {
 
     @Transactional(readOnly = true)
     public Slice<EventResponse> findAllByCategory(EventCategory eventCategory, int page) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
-        Pageable pageable = PageRequest.of(page, 12, sort);
+        Pageable pageable = PageRequest.of(page, 12, Sort.by(Sort.Direction.DESC, "createdAt"));
         Slice<Event> events = eventRepository.findAllByEventCategory(eventCategory, pageable);
         return events.map(EventResponse::from);
     }
