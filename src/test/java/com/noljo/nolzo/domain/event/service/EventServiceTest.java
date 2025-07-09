@@ -137,8 +137,6 @@ class EventServiceTest {
                 .eventCategory(EventCategory.MUSICAL)
                 .runtime(120)
                 .ageLimit(12)
-                .rating(5)
-                .reviewCount(10)
                 .build();
 
         event = eventRepository.save(event);
