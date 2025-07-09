@@ -2,18 +2,17 @@ package com.noljo.nolzo.event.repository;
 
 import com.noljo.nolzo.event.entity.Event;
 import com.noljo.nolzo.event.entity.EventCategory;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findTop10ByEventCategoryOrderByViewCountDesc(EventCategory eventCategory);
 
-    List<Event> findAllByEventCategory(EventCategory eventCategory, Sort sort);
+    Slice<Event> findAllByEventCategory(EventCategory eventCategory, Pageable pageable);
 
     List<Event> findTop6ByOrderByViewCountDesc();
   
