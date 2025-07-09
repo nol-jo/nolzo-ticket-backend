@@ -29,6 +29,8 @@ public class EventService {
     private final EventRepository eventRepository;
     private final SeatService seatService;
     private final S3Uploader s3Uploader;
+    private static final int SIZE = 12;
+    private static final String SORT_BY_DATE = "createdAt";
 
     public Event getEvent(Long id) {
         return eventRepository.findById(id)
@@ -44,7 +46,7 @@ public class EventService {
 
     @Transactional(readOnly = true)
     public Slice<EventResponse> findAllByCategory(EventCategory eventCategory, int page) {
-        Pageable pageable = PageRequest.of(page, 12, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(page, SIZE, Sort.by(Sort.Direction.DESC, SORT_BY_DATE));
         Slice<Event> events = eventRepository.findAllByEventCategory(eventCategory, pageable);
         return events.map(EventResponse::from);
     }
