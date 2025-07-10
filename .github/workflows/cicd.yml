@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main,develop]
+    branches: [main,develop,feat/cicd]
 jobs:
   build:
     runs-on: ubuntu-latest
